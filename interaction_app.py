@@ -23,7 +23,7 @@ class Routine(Enum):
 location_df = pd.read_csv("csv/sample_location.csv")
 px.set_mapbox_access_token(open(".mapbox_token").read())
 
-fig = px.scatter_mapbox(
+location_fig = px.scatter_mapbox(
     location_df,
     lat="latitude",
     lon="longitude",
@@ -33,8 +33,8 @@ fig = px.scatter_mapbox(
     width=500,
     height=500
 )
-fig.update_layout(mapbox_style="streets")
-fig.update_layout(mapbox_bounds={"west": 127.35, "east": 127.37, "south": 36.36, "north": 36.38})
+location_fig.update_layout(mapbox_style="streets")
+location_fig.update_layout(mapbox_bounds={"west": 127.35, "east": 127.37, "south": 36.36, "north": 36.38})
 
 # TODO: Styling components as option labels:
 # https://dash.plotly.com/dash-core-components/radioitems#styling-components-as-option-labels
@@ -54,7 +54,7 @@ app.layout = html.Div(
             )
         ),
         html.Div(
-            dcc.Graph(id="geographical-scatter", figure=fig)
+            dcc.Graph(id="geographical-scatter", figure=location_fig)
         ),
     ]
 )

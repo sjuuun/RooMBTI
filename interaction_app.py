@@ -55,6 +55,7 @@ def location_scatter_mapbox(df: pd.DataFrame) -> go.Figure:
         df,
         lat="latitude",
         lon="longitude",
+        color="user_id",
         hover_name="type",
         hover_data=["latitude", "longitude"],
         zoom=3,

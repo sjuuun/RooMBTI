@@ -1,15 +1,13 @@
-from dash import Dash, html, dcc
-import dash_bootstrap_components as dbc
-import plotly.express as px
-import pandas as pd
 from enum import Enum
+
+import dash_bootstrap_components as dbc
+import pandas as pd
+import plotly.express as px
+from dash import Dash, html, dcc
+from dash.dependencies import Input, Output
 
 external_stylesheets = [dbc.themes.BOOTSTRAP]
 app = Dash(__name__, external_stylesheets=external_stylesheets)
-
-
-# TODO: Weekly routine
-# TODO: Location
 
 
 class Routine(Enum):
@@ -27,7 +25,7 @@ location_fig = px.scatter_mapbox(
     location_df,
     lat="latitude",
     lon="longitude",
-    hover_name="timestamp",
+    hover_name="type",
     hover_data=["latitude", "longitude"],
     zoom=3,
     width=500,
@@ -42,6 +40,7 @@ app.layout = html.Div(
     [
         html.Div(
             dcc.RadioItems(
+                id="routine_type",
                 options=[
                     {"label": Routine.SLEEP.value, "value": Routine.SLEEP.name},
                     {"label": Routine.CLASS.value, "value": Routine.CLASS.name},
@@ -54,10 +53,30 @@ app.layout = html.Div(
             )
         ),
         html.Div(
-            dcc.Graph(id="geographical-scatter", figure=location_fig)
+            dcc.Graph(id="geographical_scatter", figure=location_fig)
         ),
     ]
 )
+
+@app.callback(
+    Output('geographical_scatter', 'figure'),
+    Input('routine_type', 'value'),
+)
+def update_geographical_scatter(routine_type):
+    updated_df = location_df[location_df['type'] == routine_type]
+    updated_location_fig = px.scatter_mapbox(
+        updated_df,
+        lat="latitude",
+        lon="longitude",
+        hover_name="type",
+        hover_data=["latitude", "longitude"],
+        zoom=3,
+        width=500,
+        height=500
+    )
+    updated_location_fig.update_layout(mapbox_style="streets")
+    updated_location_fig.update_layout(mapbox_bounds={"west": 127.35, "east": 127.37, "south": 36.36, "north": 36.38})
+    return updated_location_fig
 
 
 if __name__ == '__main__':

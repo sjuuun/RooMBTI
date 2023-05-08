@@ -34,6 +34,20 @@ location_fig = px.scatter_mapbox(
 location_fig.update_layout(mapbox_style="streets")
 location_fig.update_layout(mapbox_bounds={"west": 127.35, "east": 127.37, "south": 36.36, "north": 36.38})
 
+
+weekly_df = pd.DataFrame([
+    dict(type="SLEEP", user_id="Me", weekday="Monday", start="1970-01-01 00:00:00", end="1970-01-01 09:42:00"),
+    dict(type="SLEEP", user_id="Me", weekday="Monday", start="1970-01-01 23:10:00", end="1970-01-01 23:59:59"),
+    dict(type="CLASS", user_id="Me", weekday="Monday", start="1970-01-01 10:07:00", end="1970-01-01 11:42:00"),
+    dict(type="MEAL", user_id="Me", weekday="Monday", start="1970-01-01 12:20:00", end="1970-01-01 13:07:00"),
+])
+weekly_fig = px.timeline(
+    weekly_df,
+    x_start="start",
+    x_end="end",
+    y="weekday"
+)
+
 # TODO: Styling components as option labels:
 # https://dash.plotly.com/dash-core-components/radioitems#styling-components-as-option-labels
 app.layout = html.Div(
@@ -55,6 +69,9 @@ app.layout = html.Div(
         html.Div(
             dcc.Graph(id="geographical_scatter", figure=location_fig)
         ),
+        html.Div(
+            dcc.Graph(id="weekly_routine", figure=weekly_fig)
+        )
     ]
 )
 
@@ -77,6 +94,21 @@ def update_geographical_scatter(routine_type):
     updated_location_fig.update_layout(mapbox_style="streets")
     updated_location_fig.update_layout(mapbox_bounds={"west": 127.35, "east": 127.37, "south": 36.36, "north": 36.38})
     return updated_location_fig
+
+
+@app.callback(
+    Output('weekly_routine', 'figure'),
+    Input('routine_type', 'value'),
+)
+def update_weekly_routine(routine_type):
+    updated_df = weekly_df[weekly_df["type"] == routine_type]
+    updated_weekly_fig = px.timeline(
+        updated_df,
+        x_start="start",
+        x_end="end",
+        y="weekday"
+    )
+    return updated_weekly_fig
 
 
 if __name__ == '__main__':

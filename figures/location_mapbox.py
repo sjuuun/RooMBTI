@@ -7,6 +7,11 @@ def location_mapbox_fake_data() -> pd.DataFrame:
     return pd.read_csv("csv/sample_location.csv")
 
 
+def location_mapbox_fake_my_data() -> pd.DataFrame:
+    location_df = location_mapbox_fake_data()
+    return location_df[location_df["user_id"] == "Me"]
+
+
 def location_mapbox(df: pd.DataFrame) -> go.Figure:
     px.set_mapbox_access_token(open(".mapbox_token").read())
     fig = px.scatter_mapbox(

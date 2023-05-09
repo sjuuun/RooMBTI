@@ -26,6 +26,11 @@ def weekly_routine_fake_data() -> pd.DataFrame:
     return weekly_df
 
 
+def weekly_routine_fake_my_data() -> pd.DataFrame:
+    weekly_df = weekly_routine_fake_data()
+    return weekly_df[weekly_df["user_id"] == "Me"]
+
+
 def weekly_routine_timeline(df: pd.DataFrame) -> go.Figure:
     fig = make_subplots(rows=7, cols=1, shared_xaxes=True, vertical_spacing=0.02)
     timeline_figs = []

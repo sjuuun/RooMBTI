@@ -1,6 +1,12 @@
+from enum import Enum
+
 import dash
-from dash import Dash, html, dcc
+from dash import Dash, html, dcc, callback
 from figures import BFI, daily_routine, indoor
+from dash.dependencies import Input, Output
+from figures.location_mapbox import location_mapbox, location_mapbox_fake_data
+from figures.weekly_routine_timeline import weekly_routine_timeline, weekly_routine_fake_data
+
 import fake_data
 
 
@@ -11,6 +17,17 @@ fig_bfi = BFI.bfi_fig(df_user[0], df_roommate[0]).fig
 fig_indoor = indoor.indoor_fig(df_user[2], df_roommate[2]).fig
 fig_daily_routine = daily_routine.daily_routine_fig(df_user[1], df_roommate[1]).fig
 
+
+
+
+class Routine(Enum):
+    SLEEP = "Sleeping Time"
+    CLASS = "Class Time"
+    MEAL = "Meal Time"
+    STUDY = "Study Time"
+    EXERCISE = "Exercise Time"
+
+
 layout = html.Div(children=[
     html.H1(children="This is our Comparison page"),
 
@@ -18,43 +35,80 @@ layout = html.Div(children=[
         This is our Comparison page content.
     """),
 
-    html.Div(
-        children=[
-            dcc.Graph(
-                id='example-graph1',
-                figure=fig_bfi
-            ),
-            dcc.Graph(
-                id='example-graph2',
-                figure=fig_indoor
-            ),
-            dcc.Graph(
-                id='example-graph3',
-                figure=fig_daily_routine
-        )]
+    html.Div(children=[
+        html.Div(children=[
+            html.Div(dcc.Graph(id='bfi',figure=fig_bfi))
+            ],
+        ),
+        html.Div(children=[
+            dcc.Graph(id='indoor',figure=fig_indoor),
+            ],
+        ),
+
+        ],
+        style={
+            'display': 'flex'
+        }
     ),
 
-    html.Div(
-        """
-        This is for Daily Routine
-        """
+    html.Div(children=[
+        dcc.Graph(id='daily_routine',figure=fig_daily_routine),
+        ],
+        style={
+            'padding': '0rem 0rem 0rem 16rem'
+        }
     ),
+    
+    html.Div(children=[
+        html.Div(
+            html.Div(
+                dcc.RadioItems(
+                    id="routine_type",
+                    options=[
+                        {"label": Routine.SLEEP.value, "value": Routine.SLEEP.name},
+                        {"label": Routine.CLASS.value, "value": Routine.CLASS.name},
+                        {"label": Routine.MEAL.value, "value": Routine.MEAL.name},
+                        {"label": Routine.STUDY.value, "value": Routine.STUDY.name},
+                        {"label": Routine.EXERCISE.value, "value": Routine.EXERCISE.name},
+                    ],
+                    value=Routine.SLEEP.name,
+                    inline=True,
+                )
+            )
+        ),
 
-    html.Div(
-        """
-        This is for radio Item
-        """
-    ),
+        html.Div(
+            dcc.Graph(id="weekly_routine", figure=weekly_routine_timeline(weekly_routine_fake_data())),
+            style=dict(float="left"),
+        ),
 
-    html.Div(
-        """
-        This is for Weekly Routine
-        """
-    ),
-
-    html.Div(
-        """
-        This is for Location
-        """
+        html.Div(
+            dcc.Graph(id="geographical_scatter", figure=location_mapbox(location_mapbox_fake_data())),
+            style=dict(float="left"),
+        )
+    ],
+    style={
+        'padding': '0rem 0rem 0rem 16rem'
+    }
     )
 ])
+
+
+@callback(
+    Output('weekly_routine', 'figure'),
+    Input('routine_type', 'value'),
+)
+def update_weekly_routine(routine_type):
+    weekly_df = weekly_routine_fake_data()
+    updated_df = weekly_df[weekly_df["type"] == routine_type]
+    return weekly_routine_timeline(updated_df)
+
+
+@callback(
+    Output('geographical_scatter', 'figure'),
+    Input('routine_type', 'value'),
+)
+def update_geographical_scatter(routine_type):
+    location_df = location_mapbox_fake_data()
+    updated_df = location_df[location_df['type'] == routine_type]
+    return location_mapbox(updated_df)

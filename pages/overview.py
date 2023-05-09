@@ -7,7 +7,16 @@ from dash.dependencies import Input, Output
 from figures.location_mapbox import location_mapbox, location_mapbox_fake_my_data
 from figures.weekly_routine_timeline import weekly_routine_timeline, weekly_routine_fake_my_data
 
+from figures import BFI, daily_routine, indoor
+import fake_data
+
 dash.register_page(__name__, path="/")
+
+
+df_user, df_roommate = fake_data.user_and_roommate_data()
+fig_bfi = BFI.bfi_fig(df_user[0]).fig
+fig_indoor = indoor.indoor_fig(df_user[2]).fig
+fig_daily_routine = daily_routine.daily_routine_fig(df_user[1]).fig
 
 
 class Routine(Enum):
@@ -24,6 +33,30 @@ layout = html.Div(children=[
     html.Div(children="""
         This is our Overview page content.
     """),
+
+    html.Div(children=[
+        html.Div(children=[
+            html.Div(dcc.Graph(id='bfi',figure=fig_bfi))
+            ],
+        ),
+        html.Div(children=[
+            dcc.Graph(id='indoor',figure=fig_indoor),
+            ],
+        ),
+
+        ],
+        style={
+            'display': 'flex'
+        }
+    ),
+
+    html.Div(children=[
+        dcc.Graph(id='daily_routine',figure=fig_daily_routine),
+        ],
+        style={
+            'padding': '0rem 0rem 0rem 16rem'
+        }
+    ),
 
     html.Div(
         html.Div(

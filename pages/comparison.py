@@ -2,20 +2,21 @@ from enum import Enum
 
 import dash
 from dash import Dash, html, dcc, callback
-from figures import BFI, daily_routine, indoor
 from dash.dependencies import Input, Output
+
 from figures.location_mapbox import location_mapbox, location_mapbox_fake_data
 from figures.weekly_routine_timeline import weekly_routine_timeline, weekly_routine_fake_data
 
+from figures import BFI, daily_routine, indoor
 import fake_data
 
 
 dash.register_page(__name__)
 
 df_user, df_roommate = fake_data.user_and_roommate_data()
-fig_bfi = BFI.bfi_fig(df_user[0], df_roommate[0]).fig
-fig_indoor = indoor.indoor_fig(df_user[2], df_roommate[2]).fig
-fig_daily_routine = daily_routine.daily_routine_fig(df_user[1], df_roommate[1]).fig
+fig_bfi = BFI.bfi_fig(df_user[0], df_roommate[0]).fig_cmp
+fig_indoor = indoor.indoor_fig(df_user[2], df_roommate[2]).fig_cmp
+fig_daily_routine = daily_routine.daily_routine_fig(df_user[1], df_roommate[1]).fig_cmp
 
 
 

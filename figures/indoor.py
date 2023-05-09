@@ -7,17 +7,27 @@ import fake_data
 #indoor_columns = ['timestamp', 'IndoorRatio', 'user']
 
 class indoor_fig:
-    def __init__(self, userdata, roommatedata):
+    def __init__(self, userdata, roommatedata=pd.DataFrame()):
         self.user_df = userdata
         self.roommate_df = roommatedata
+        if not roommatedata.empty:
+            self.fig_cmp = self.make_fig_compare()
         self.fig = self.make_fig()
-
+    
     def make_fig(self):
+        indoor_fig = go.Figure(data=[
+                      go.Scatter(x=self.user_df.timestamp, y=self.user_df.IndoorRatio, mode='lines', name='User', line_shape='spline')
+                      ])
+        indoor_fig.update_layout(template='simple_white', title='Indoor')
+        indoor_fig.update_yaxes(range=[0.0, 1.0])
+        return indoor_fig
+
+    def make_fig_compare(self):
         indoor_fig = go.Figure(data=[
                       go.Scatter(x=self.user_df.timestamp, y=self.user_df.IndoorRatio, mode='lines', name='User', line_shape='spline'),
                       go.Scatter(x=self.roommate_df.timestamp, y=self.roommate_df.IndoorRatio, mode='lines' , name='Roommate', line_shape='spline')
                       ])
-        indoor_fig.update_layout(template='simple_white')
+        indoor_fig.update_layout(template='simple_white', title='Indoor')
         indoor_fig.update_yaxes(range=[0.0, 1.0])
         return indoor_fig
 

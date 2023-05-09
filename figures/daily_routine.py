@@ -8,19 +8,23 @@ import fake_data
 
 
 class daily_routine_fig:
-    def __init__(self, userdata, roommatedata):
+    def __init__(self, userdata, roommatedata=pd.DataFrame()):
         self.user_df = userdata
         self.roommate_df = roommatedata
+        if not roommatedata.empty:
+            self.fig_cmp = self.make_fig_compare()
         self.fig = self.make_fig()
 
-    """def make_fig(self):
-        daily_routine_fig = go.Figure(go.Heatmap(x=self.user_df['timestamp'].tolist(), y=['User' for i in range(len(self.user_df))], z=self.user_df.routine))
-        return daily_routine_fig"""
-    
     def make_fig(self):
+        df = self.user_df
+        daily_routine_fig = px.timeline(df.loc[df['routine']!='None'], x_start='start', x_end='end', y='user', color='routine', height=400, width=1200)
+        daily_routine_fig.update_layout(template='simple_white', title='Daily Routine')
+        return daily_routine_fig
+
+    def make_fig_compare(self):
         df = pd.concat([self.user_df, self.roommate_df])
         daily_routine_fig = px.timeline(df.loc[df['routine']!='None'], x_start='start', x_end='end', y='user', color='routine', height=400, width=1200)
-        daily_routine_fig.update_layout(template='simple_white')
+        daily_routine_fig.update_layout(template='simple_white', title='Daily Routine')
         return daily_routine_fig
 
 if __name__ == '__main__':

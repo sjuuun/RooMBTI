@@ -17,7 +17,7 @@ class bfi_fig:
         bfi_fig = go.Figure()
         bfi_fig.add_trace(go.Scatterpolar(r=self.user_df.iloc[0].tolist()[0:5]+[self.user_df.iloc[0].tolist()[0]], theta=fake_data.bfi_columns+[fake_data.bfi_columns[0]], name='User' ))
         bfi_fig.add_trace(go.Scatterpolar(r=self.roommate_df.iloc[0].tolist()[0:5]+[self.roommate_df.iloc[0].tolist()[0]], theta=fake_data.bfi_columns+[fake_data.bfi_columns[0]], name='Roommate' ))
-        bfi_fig.update_layout(template='simple_white')
+        bfi_fig.update_layout(template='simple_white', width=500, height=500)
         return bfi_fig
 
 

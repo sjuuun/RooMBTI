@@ -58,31 +58,37 @@ layout = html.Div(children=[
         }
     ),
 
-    html.Div(
+
+    html.Div(children=[
         html.Div(
-            dcc.RadioItems(
-                id="my_routine_type",
-                options=[
-                    {"label": Routine.SLEEP.value, "value": Routine.SLEEP.name},
-                    {"label": Routine.CLASS.value, "value": Routine.CLASS.name},
-                    {"label": Routine.MEAL.value, "value": Routine.MEAL.name},
-                    {"label": Routine.STUDY.value, "value": Routine.STUDY.name},
-                    {"label": Routine.EXERCISE.value, "value": Routine.EXERCISE.name},
-                ],
-                value=Routine.SLEEP.name,
-                inline=True,
+            html.Div(
+                dcc.RadioItems(
+                    id="my_routine_type",
+                    options=[
+                        {"label": Routine.SLEEP.value, "value": Routine.SLEEP.name},
+                        {"label": Routine.CLASS.value, "value": Routine.CLASS.name},
+                        {"label": Routine.MEAL.value, "value": Routine.MEAL.name},
+                        {"label": Routine.STUDY.value, "value": Routine.STUDY.name},
+                        {"label": Routine.EXERCISE.value, "value": Routine.EXERCISE.name},
+                    ],
+                    value=Routine.SLEEP.name,
+                    inline=True,
+                )
             )
-        )
-    ),
+        ),
 
-    html.Div(
-        dcc.Graph(id="my_weekly_routine", figure=weekly_routine_timeline(weekly_routine_fake_my_data())),
-        style=dict(float="left"),
-    ),
+        html.Div(
+            dcc.Graph(id="my_weekly_routine", figure=weekly_routine_timeline(weekly_routine_fake_my_data())),
+            style=dict(float="left"),
+        ),
 
-    html.Div(
-        dcc.Graph(id="my_geographical_scatter", figure=location_mapbox(location_mapbox_fake_my_data())),
-        style=dict(float="left"),
+        html.Div(
+            dcc.Graph(id="my_geographical_scatter", figure=location_mapbox(location_mapbox_fake_my_data())),
+            style=dict(float="left"),
+        )],
+        style={
+            'padding': '0rem 0rem 0rem 16rem'
+        }
     )
 ])
 

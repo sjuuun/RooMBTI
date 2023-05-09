@@ -26,6 +26,11 @@ def weekly_routine_fake_data() -> pd.DataFrame:
     return weekly_df
 
 
+def weekly_routine_fake_my_data() -> pd.DataFrame:
+    weekly_df = weekly_routine_fake_data()
+    return weekly_df[weekly_df["user_id"] == "Me"]
+
+
 def weekly_routine_timeline(df: pd.DataFrame) -> go.Figure:
     fig = make_subplots(rows=7, cols=1, shared_xaxes=True, vertical_spacing=0.02)
     timeline_figs = []
@@ -48,11 +53,11 @@ def weekly_routine_timeline(df: pd.DataFrame) -> go.Figure:
     fig.update_yaxes(title="Sat", row=6, col=1)
     fig.update_yaxes(title="Sun", row=7, col=1)
 
-    fig.update_xaxes(tickformat="%H:%M")
+    fig.update_xaxes(tickformat="%H:%M", range=["1970-01-01 00:00:00", "1970-01-02 00:00:00"])
     fig.update_layout(title="Weekly Routine")
 
     fig.update_xaxes(type="date")
 
-    fig.update_layout(width=800, height=600)
+    fig.update_layout(width=700, height=600)
 
     return fig

@@ -34,18 +34,20 @@ def weekly_routine_timeline(df: pd.DataFrame) -> go.Figure:
         for j in range(len(f.data)):
             fig.add_trace(go.Bar(f.data[j], showlegend=show_legend), row=(i+1), col=1)
 
-    fig.update_yaxes(title="Monday", row=1, col=1)
-    fig.update_yaxes(title="Tuesday", row=2, col=1)
-    fig.update_yaxes(title="Wednesday", row=3, col=1)
-    fig.update_yaxes(title="Thursday", row=4, col=1)
-    fig.update_yaxes(title="Friday", row=5, col=1)
-    fig.update_yaxes(title="Saturday", row=6, col=1)
-    fig.update_yaxes(title="Sunday", row=7, col=1)
+    fig.update_yaxes(title="Mon", row=1, col=1)
+    fig.update_yaxes(title="Tue", row=2, col=1)
+    fig.update_yaxes(title="Wed", row=3, col=1)
+    fig.update_yaxes(title="Thr", row=4, col=1)
+    fig.update_yaxes(title="Fri", row=5, col=1)
+    fig.update_yaxes(title="Sat", row=6, col=1)
+    fig.update_yaxes(title="Sun", row=7, col=1)
 
     fig.update_xaxes(tickformat="%H:%M")
     fig.update_layout(title="Weekly Routine")
 
     fig.update_xaxes(type="date")
+
+    fig.update_layout(width=800, height=600)
 
     return fig
 
@@ -59,10 +61,10 @@ def location_scatter_mapbox(df: pd.DataFrame) -> go.Figure:
         hover_name="type",
         hover_data=["latitude", "longitude"],
         zoom=3,
-        width=500,
-        height=500
+        width=600,
+        height=600
     )
-    fig.update_layout(mapbox_style="streets")
+    fig.update_layout(title="Location", mapbox_style="streets")
     fig.update_layout(mapbox_bounds={"west": 127.35, "east": 127.37, "south": 36.36, "north": 36.38})
 
     return fig
@@ -110,12 +112,18 @@ app.layout = html.Div(
                 inline=True,
             )
         ),
-        html.Div(
-            dcc.Graph(id="geographical_scatter", figure=location_fig)
-        ),
-        html.Div(
-            dcc.Graph(id="weekly_routine", figure=weekly_fig)
-        )
+        html.Div([
+            html.Div(
+                dcc.Graph(id="weekly_routine", figure=weekly_fig),
+                style=dict(float="left"),
+            ),
+            html.Div(
+                dcc.Graph(id="geographical_scatter", figure=location_fig),
+                style=dict(float="left"),
+            ),
+        ],
+            style=dict(float="left"))
+
     ]
 )
 

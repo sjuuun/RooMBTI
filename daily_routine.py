@@ -19,8 +19,6 @@ class daily_routine_fig:
     
     def make_fig(self):
         df = pd.concat([self.user_df, self.roommate_df])
-        #df['start'] = pd.to_datetime(df['start'], unit='ms')
-        #df['end'] = pd.to_datetime(df['end'], unit='ms')
         daily_routine_fig = px.timeline(df.loc[df['routine']!='None'], x_start='start', x_end='end', y='user', color='routine')
         daily_routine_fig.update_layout(template='simple_white')
         return daily_routine_fig

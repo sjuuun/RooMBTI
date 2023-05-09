@@ -18,6 +18,7 @@ class indoor_fig:
                       go.Scatter(x=self.roommate_df.timestamp, y=self.roommate_df.IndoorRatio, mode='lines' , name='Roommate', line_shape='spline')
                       ])
         indoor_fig.update_layout(template='simple_white')
+        indoor_fig.update_yaxes(range=[0.0, 1.0])
         return indoor_fig
 
 

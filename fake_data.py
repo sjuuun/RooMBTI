@@ -30,12 +30,12 @@ class dummydata:
                 daily_routine = [j==select_routine for j in range(1,6)]
                 daily_routine_change = daily_routine_change+random.randrange(100, 250)
             indoor = 0
-            if i%10==0:
+            if i%50==0:
                 randval = (random.random()-0.5)*0.005
             if i==0:
                 indoor=random.random()
             else:
-                indoor=indoor_data[i-1][1]+randval+0.005*(random.random()-0.5)
+                indoor=indoor_data[i-1][1]+randval+0.002*(random.random()-0.5)
                 if indoor > 1:
                     indoor = 1
                 if indoor < 0:

@@ -17,7 +17,7 @@ def location_mapbox(df: pd.DataFrame) -> go.Figure:
         hover_name="type",
         hover_data=["latitude", "longitude"],
         zoom=3,
-        width=600,
+        width=500,
         height=600
     )
     fig.update_layout(title="Location", mapbox_style="streets")

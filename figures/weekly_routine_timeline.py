@@ -53,6 +53,6 @@ def weekly_routine_timeline(df: pd.DataFrame) -> go.Figure:
 
     fig.update_xaxes(type="date")
 
-    fig.update_layout(width=800, height=600)
+    fig.update_layout(width=700, height=600)
 
     return fig

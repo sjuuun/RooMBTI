@@ -4,6 +4,7 @@ import dash
 from dash import callback, html, dcc
 from dash.dependencies import Input, Output
 
+from figures.location_mapbox import location_mapbox, location_mapbox_fake_data
 from figures.weekly_routine_timeline import weekly_routine_timeline, weekly_routine_fake_data
 
 dash.register_page(__name__)
@@ -59,9 +60,8 @@ layout = html.Div(children=[
     ),
 
     html.Div(
-        """
-        This is for Location
-        """
+        dcc.Graph(id="geographical_scatter", figure=location_mapbox(location_mapbox_fake_data())),
+        style=dict(float="left"),
     )
 ])
 
@@ -74,3 +74,13 @@ def update_weekly_routine(routine_type):
     weekly_df = weekly_routine_fake_data()
     updated_df = weekly_df[weekly_df["type"] == routine_type]
     return weekly_routine_timeline(updated_df)
+
+
+@callback(
+    Output('geographical_scatter', 'figure'),
+    Input('routine_type', 'value'),
+)
+def update_geographical_scatter(routine_type):
+    location_df = location_mapbox_fake_data()
+    updated_df = location_df[location_df['type'] == routine_type]
+    return location_mapbox(updated_df)

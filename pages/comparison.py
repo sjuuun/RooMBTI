@@ -1,13 +1,24 @@
 from enum import Enum
 
 import dash
-from dash import callback, html, dcc
+from dash import Dash, html, dcc, callback
 from dash.dependencies import Input, Output
 
 from figures.location_mapbox import location_mapbox, location_mapbox_fake_data
 from figures.weekly_routine_timeline import weekly_routine_timeline, weekly_routine_fake_data
 
+from figures import BFI, daily_routine, indoor
+import fake_data
+
+
 dash.register_page(__name__)
+
+df_user, df_roommate = fake_data.user_and_roommate_data()
+fig_bfi = BFI.bfi_fig(df_user[0], df_roommate[0]).fig_cmp
+fig_indoor = indoor.indoor_fig(df_user[2], df_roommate[2]).fig_cmp
+fig_daily_routine = daily_routine.daily_routine_fig(df_user[1], df_roommate[1]).fig_cmp
+
+
 
 
 class Routine(Enum):
@@ -25,43 +36,61 @@ layout = html.Div(children=[
         This is our Comparison page content.
     """),
 
-    html.Div(
-        """
-        This is for similarity, BFI, Indoor
-        """
+    html.Div(children=[
+        html.Div(children=[
+            html.Div(dcc.Graph(id='bfi',figure=fig_bfi))
+            ],
+        ),
+        html.Div(children=[
+            dcc.Graph(id='indoor',figure=fig_indoor),
+            ],
+        ),
+
+        ],
+        style={
+            'display': 'flex'
+        }
     ),
 
-    html.Div(
-        """
-        This is for Daily Routine
-        """
+    html.Div(children=[
+        dcc.Graph(id='daily_routine',figure=fig_daily_routine),
+        ],
+        style={
+            'padding': '0rem 0rem 0rem 16rem'
+        }
     ),
-
-    html.Div(
+    
+    html.Div(children=[
         html.Div(
-            dcc.RadioItems(
-                id="routine_type",
-                options=[
-                    {"label": Routine.SLEEP.value, "value": Routine.SLEEP.name},
-                    {"label": Routine.CLASS.value, "value": Routine.CLASS.name},
-                    {"label": Routine.MEAL.value, "value": Routine.MEAL.name},
-                    {"label": Routine.STUDY.value, "value": Routine.STUDY.name},
-                    {"label": Routine.EXERCISE.value, "value": Routine.EXERCISE.name},
-                ],
-                value=Routine.SLEEP.name,
-                inline=True,
+            html.Div(
+                dcc.RadioItems(
+                    id="routine_type",
+                    options=[
+                        {"label": Routine.SLEEP.value, "value": Routine.SLEEP.name},
+                        {"label": Routine.CLASS.value, "value": Routine.CLASS.name},
+                        {"label": Routine.MEAL.value, "value": Routine.MEAL.name},
+                        {"label": Routine.STUDY.value, "value": Routine.STUDY.name},
+                        {"label": Routine.EXERCISE.value, "value": Routine.EXERCISE.name},
+                    ],
+                    value=Routine.SLEEP.name,
+                    inline=True,
+                )
             )
+        ),
+
+        html.Div(
+            dcc.Graph(id="weekly_routine", figure=weekly_routine_timeline(weekly_routine_fake_data())),
+            style=dict(float="left"),
+        ),
+
+        html.Div(
+            dcc.Graph(id="geographical_scatter", figure=location_mapbox(location_mapbox_fake_data())),
+            style=dict(float="left"),
         )
-    ),
-
-    html.Div(
-        dcc.Graph(id="weekly_routine", figure=weekly_routine_timeline(weekly_routine_fake_data())),
-        style=dict(float="left"),
-    ),
-
-    html.Div(
-        dcc.Graph(id="geographical_scatter", figure=location_mapbox(location_mapbox_fake_data())),
-        style=dict(float="left"),
+    ],
+    style={
+        'padding': '0rem 0rem 0rem 16rem'
+    }
     )
 ])
 

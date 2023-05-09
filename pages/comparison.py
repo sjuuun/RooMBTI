@@ -1,13 +1,14 @@
 from enum import Enum
 
 import dash
+import dash_daq as daq
 from dash import Dash, html, dcc, callback
 from dash.dependencies import Input, Output
 
 from figures.location_mapbox import location_mapbox, location_mapbox_fake_data
 from figures.weekly_routine_timeline import weekly_routine_timeline, weekly_routine_fake_data
-
 from figures import BFI, daily_routine, indoor
+from figures.similarity import half_ring_plot
 import fake_data
 
 
@@ -37,6 +38,19 @@ layout = html.Div(children=[
     """),
 
     html.Div(children=[
+        html.Div(id='similarity', children=[
+            daq.Gauge(
+                label='Similarity',
+                showCurrentValue=True,
+                value=76,
+                max=100,
+                min=0,
+                color="#346beb"
+            )
+        ]),
+        # html.Div(children=[
+        #     dcc.Graph(id='similarity', figure=half_ring_plot(180))
+        # ]),
         html.Div(children=[
             html.Div(dcc.Graph(id='bfi',figure=fig_bfi))
             ],

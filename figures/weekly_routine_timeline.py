@@ -53,7 +53,7 @@ def weekly_routine_timeline(df: pd.DataFrame) -> go.Figure:
     fig.update_yaxes(title="Sat", row=6, col=1)
     fig.update_yaxes(title="Sun", row=7, col=1)
 
-    fig.update_xaxes(tickformat="%H:%M")
+    fig.update_xaxes(tickformat="%H:%M", range=["1970-01-01 00:00:00", "1970-01-02 00:00:00"])
     fig.update_layout(title="Weekly Routine")
 
     fig.update_xaxes(type="date")

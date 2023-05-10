@@ -1,5 +1,3 @@
-from enum import Enum
-
 import dash
 from dash import callback, html, dcc
 from dash.dependencies import Input, Output
@@ -7,6 +5,7 @@ from dash.dependencies import Input, Output
 from figures.location_mapbox import location_mapbox, location_mapbox_fake_my_data
 from figures.weekly_routine_timeline import weekly_routine_timeline, weekly_routine_fake_my_data
 
+from pages import Routine
 from figures import BFI, daily_routine, indoor
 import fake_data
 
@@ -17,14 +16,6 @@ df_user, df_roommate = fake_data.user_and_roommate_data()
 fig_bfi = BFI.bfi_fig(df_user[0]).fig
 fig_indoor = indoor.indoor_fig(df_user[2]).fig
 fig_daily_routine = daily_routine.daily_routine_fig(df_user[1]).fig
-
-
-class Routine(Enum):
-    SLEEP = "Sleeping Time"
-    CLASS = "Class Time"
-    MEAL = "Meal Time"
-    STUDY = "Study Time"
-    EXERCISE = "Exercise Time"
 
 
 layout = html.Div(children=[

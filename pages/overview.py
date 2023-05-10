@@ -33,7 +33,60 @@ layout = html.Div(children=[
     html.Div(children="""
         This is our Overview page content.
     """),
-
+    html.Div(children=[
+        html.Div(id='matched', children=[
+            html.H3("Matched"),
+            html.H4("9/40"),
+        ],
+        style={
+            'float': 'left',
+            'margin': '20px',
+            'height': '90px',
+            'text-align': 'center',
+            'border-style': 'solid',
+            'border-color': '#eeeee4'
+        }),
+        html.Div(id='top3', children=[
+            html.H3("Top 3 Users"),
+            html.Div(id='user figures', children=[
+                html.Img(
+                    src="https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper.png",
+                    style={
+                        'width': '25%',
+                        'heigh': '25%',
+                    }
+                ),
+                html.Img(
+                    src="https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper.png",
+                    style={
+                        'width': '25%',
+                        'heigh': '25%',
+                    }
+                ),
+                html.Img(
+                    src="https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper.png",
+                    style={
+                        'width': '25%',
+                        'heigh': '25%',
+                    }
+                ),
+            ],
+            style={
+                'float': 'left'
+            }
+            ),
+        ],
+        style={
+            'float': 'left',
+            'margin': '20px',
+            'width': '200px',
+            'height': '90px',
+            'text-align': 'center',
+            'border-style': 'solid',
+            'border-color': '#eeeee4'
+        })
+        ]
+    ),
     html.Div(children=[
         html.Div(children=[
             html.Div(dcc.Graph(id='bfi',figure=fig_bfi))
@@ -46,6 +99,7 @@ layout = html.Div(children=[
 
         ],
         style={
+            'float': 'initial',
             'display': 'flex'
         }
     ),

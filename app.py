@@ -3,6 +3,7 @@ from dash import Dash, html, dcc, page_registry, page_container
 
 external_stylesheets = [dbc.themes.BOOTSTRAP, dbc.icons.BOOTSTRAP, dbc.icons.FONT_AWESOME]
 app = Dash(__name__, use_pages=True, external_stylesheets=external_stylesheets)
+server = app.server
 
 navbar = dbc.Navbar(
     dbc.Container(

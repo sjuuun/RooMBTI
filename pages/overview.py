@@ -1,3 +1,4 @@
+import pandas as pd
 import dash
 from dash import callback, html, dcc
 from dash.dependencies import Input, Output
@@ -11,9 +12,13 @@ import fake_data
 
 dash.register_page(__name__, path="/")
 
+bfi_df = pd.read_csv("./csv/bfi.csv")
+user_df = bfi_df[bfi_df['user_id']=='P3029']
+roommate_df = bfi_df[bfi_df['user_id']=='P3030']
+
 
 df_user, df_roommate = fake_data.user_and_roommate_data()
-fig_bfi = BFI.bfi_fig(df_user[0]).fig
+fig_bfi = BFI.bfi_fig(user_df).fig
 fig_indoor = indoor.indoor_fig(df_user[2]).fig
 fig_daily_routine = daily_routine.daily_routine_fig(df_user[1]).fig
 

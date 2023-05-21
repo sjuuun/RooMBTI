@@ -8,7 +8,7 @@ import fake_data
 from figures import daily_routine, indoor
 from figures.bfi import bfi_compare
 from figures.location_mapbox import location_mapbox, location_mapbox_fake_data
-from figures.weekly_routine_timeline import weekly_routine_timeline, weekly_routine_fake_data
+from figures.weekly_routine import weekly_routine
 from pages import Routine, SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID
 
 dash.register_page(__name__)
@@ -50,7 +50,7 @@ layout = html.Div(children=[
         dbc.Row([
             html.Div(
                 html.Div(
-                    dcc.RadioItems(
+                    dbc.RadioItems(
                         id="routine_type",
                         options=[
                             {"label": Routine.SLEEP.value, "value": Routine.SLEEP.name},
@@ -65,7 +65,7 @@ layout = html.Div(children=[
                 )
             ),
             dbc.Col(
-                dcc.Graph(id="weekly_routine", figure=weekly_routine_timeline(weekly_routine_fake_data()))
+                dcc.Graph(id="weekly_routine", figure=weekly_routine([SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID]))
             ),
             dbc.Col(
                 dcc.Graph(id="geographical_scatter", figure=location_mapbox(location_mapbox_fake_data()))
@@ -80,9 +80,7 @@ layout = html.Div(children=[
     Input('routine_type', 'value'),
 )
 def update_weekly_routine(routine_type):
-    weekly_df = weekly_routine_fake_data()
-    updated_df = weekly_df[weekly_df["type"] == routine_type]
-    return weekly_routine_timeline(updated_df)
+    return weekly_routine([SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID], routine_type)
 
 
 @callback(

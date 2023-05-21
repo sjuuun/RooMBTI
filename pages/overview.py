@@ -6,7 +6,7 @@ from dash.dependencies import Input, Output
 import fake_data
 from figures import daily_routine, indoor
 from figures.bfi import bfi_single
-from figures.location_mapbox import location_mapbox, location_mapbox_fake_my_data
+from figures.location_mapbox import location_mapbox
 from figures.weekly_routine import weekly_routine
 from pages import Routine, SAMPLE_ME_ID
 
@@ -110,7 +110,7 @@ layout = html.Div(children=[
                 dcc.Graph(id="my_weekly_routine", figure=weekly_routine([SAMPLE_ME_ID]))
             ),
             dbc.Col(
-                dcc.Graph(id="my_geographical_scatter", figure=location_mapbox(location_mapbox_fake_my_data()))
+                dcc.Graph(id="my_geographical_scatter", figure=location_mapbox([SAMPLE_ME_ID]))
             ),
         ]),
     ]),
@@ -130,6 +130,4 @@ def update_weekly_routine(routine_type):
     Input('my_routine_type', 'value'),
 )
 def update_geographical_scatter(routine_type):
-    location_df = location_mapbox_fake_my_data()
-    updated_df = location_df[location_df['type'] == routine_type]
-    return location_mapbox(updated_df)
+    return location_mapbox([SAMPLE_ME_ID], routine_type)

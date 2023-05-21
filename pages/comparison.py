@@ -1,26 +1,19 @@
 
-import pandas as pd
 import dash
 import dash_daq as daq
-from dash import Dash, html, dcc, callback
+from dash import html, dcc, callback
 from dash.dependencies import Input, Output
 
-from pages import Routine
+import fake_data
+from figures import daily_routine, indoor
+from figures.bfis import bfi_compare
 from figures.location_mapbox import location_mapbox, location_mapbox_fake_data
 from figures.weekly_routine_timeline import weekly_routine_timeline, weekly_routine_fake_data
-from figures import BFI, daily_routine, indoor
-from figures.similarity import half_ring_plot
-import fake_data
-
+from pages import Routine, SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID
 
 dash.register_page(__name__)
 
-bfi_df = pd.read_csv("./csv/bfi.csv")
-user_df = bfi_df[bfi_df['user_id']=='P3029']
-roommate_df = bfi_df[bfi_df['user_id']=='P3030']
-
 df_user, df_roommate = fake_data.user_and_roommate_data()
-fig_bfi = BFI.bfi_fig(user_df, roommate_df).fig_cmp
 fig_indoor = indoor.indoor_fig(df_user[2], df_roommate[2]).fig_cmp
 fig_daily_routine = daily_routine.daily_routine_fig(df_user[1], df_roommate[1]).fig_cmp
 
@@ -47,11 +40,11 @@ layout = html.Div(children=[
         #     dcc.Graph(id='similarity', figure=half_ring_plot(180))
         # ]),
         html.Div(children=[
-            html.Div(dcc.Graph(id='bfi',figure=fig_bfi))
+            html.Div(dcc.Graph(id='bfi', figure=bfi_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID)))
             ],
         ),
         html.Div(children=[
-            dcc.Graph(id='indoor',figure=fig_indoor),
+            dcc.Graph(id='indoor', figure=fig_indoor),
             ],
         ),
 

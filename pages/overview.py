@@ -1,24 +1,18 @@
-import pandas as pd
 import dash
 from dash import callback, html, dcc
 from dash.dependencies import Input, Output
 
+import fake_data
+from figures import daily_routine, indoor
+from figures.bfis import bfi_single
 from figures.location_mapbox import location_mapbox, location_mapbox_fake_my_data
 from figures.weekly_routine_timeline import weekly_routine_timeline, weekly_routine_fake_my_data
-
-from pages import Routine
-from figures import BFI, daily_routine, indoor
-import fake_data
+from pages import Routine, SAMPLE_ME_ID
 
 dash.register_page(__name__, path="/")
 
-bfi_df = pd.read_csv("./csv/bfi.csv")
-user_df = bfi_df[bfi_df['user_id']=='P3029']
-roommate_df = bfi_df[bfi_df['user_id']=='P3030']
-
 
 df_user, df_roommate = fake_data.user_and_roommate_data()
-fig_bfi = BFI.bfi_fig(user_df).fig
 fig_indoor = indoor.indoor_fig(df_user[2]).fig
 fig_daily_routine = daily_routine.daily_routine_fig(df_user[1]).fig
 
@@ -85,7 +79,7 @@ layout = html.Div(children=[
     ),
     html.Div(children=[
         html.Div(children=[
-            html.Div(dcc.Graph(id='bfi',figure=fig_bfi))
+            html.Div(dcc.Graph(id='bfi', figure=bfi_single(SAMPLE_ME_ID)))
             ],
         ),
         html.Div(children=[
@@ -103,9 +97,6 @@ layout = html.Div(children=[
     html.Div(children=[
         dcc.Graph(id='daily_routine',figure=fig_daily_routine),
         ],
-        style={
-            'padding': '0rem 0rem 0rem 16rem'
-        }
     ),
 
 
@@ -136,9 +127,6 @@ layout = html.Div(children=[
             dcc.Graph(id="my_geographical_scatter", figure=location_mapbox(location_mapbox_fake_my_data())),
             style=dict(float="left"),
         )],
-        style={
-            'padding': '0rem 0rem 0rem 16rem'
-        }
     )
 ])
 

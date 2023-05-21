@@ -15,7 +15,6 @@ dash.register_page(__name__)
 
 df_user, df_roommate = fake_data.user_and_roommate_data()
 fig_indoor = indoor.indoor_fig(df_user[2], df_roommate[2]).fig_cmp
-fig_daily_routine = daily_routine.daily_routine_fig(df_user[1], df_roommate[1]).fig_cmp
 
 layout = html.Div(children=[
     html.H1(children="Comparison"),
@@ -46,7 +45,7 @@ layout = html.Div(children=[
             ),
         ]),
         dbc.Row(
-            dcc.Graph(id='daily_routine', figure=fig_daily_routine)
+            dcc.Graph(id='daily_routine', figure=daily_routine.daily_routine_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID))
         ),
         dbc.Row([
             html.Div(

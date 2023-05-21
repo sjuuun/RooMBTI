@@ -1,9 +1,11 @@
-import dash
-from dash import html, dcc
-import plotly.express as px
-import dash_daq as daq
-import pandas as pd
 import random
+
+import dash
+import dash_bootstrap_components as dbc
+import pandas as pd
+import plotly.express as px
+from dash import html, dcc
+
 
 # make a nickname for a user
 def make_nickname():
@@ -70,13 +72,12 @@ fig.update_layout(
 dash.register_page(__name__)
 
 layout = html.Div(children=[
-    html.H1(children="This is our Users page"),
+    html.H1(children="Users"),
 
     html.Div(children="""
-        This is our Users page content.
+        Choose roommate.
     """),
-    html.Div(
-        dcc.Graph(id="similarity_barchart", figure=fig),
-        style=dict(float="left"),
+    dbc.Container(
+        dcc.Graph(id="similarity_barchart", figure=fig)
     ),
 ])

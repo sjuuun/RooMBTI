@@ -6,7 +6,7 @@ from dash.dependencies import Input, Output
 
 import fake_data
 from figures import daily_routine, indoor
-from figures.bfis import bfi_compare
+from figures.bfi import bfi_compare
 from figures.location_mapbox import location_mapbox, location_mapbox_fake_data
 from figures.weekly_routine_timeline import weekly_routine_timeline, weekly_routine_fake_data
 from pages import Routine, SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID

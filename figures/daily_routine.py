@@ -4,17 +4,28 @@ import plotly.express as px
 import plotly.graph_objects as go
 import fake_data
 
-#daily_routine_columns = ['timestamp', 'Sleeping', 'Class', 'Meal', 'Study', 'Exercise', 'user']
+'''(userid)-daily.csv columns: ["user_id", "start_at", "end_at", "routine"]
+
+user_id: str
+start_at: str
+end_at: str
+routine: str
+'''
+
 
 def get_data(user_id: str) -> pd.DataFrame:
     data_dir = f'csv/routines/{user_id}-daily.csv'
     df = pd.read_csv(data_dir)
+    if df.iloc[len(df)-1].tolist()[3] == "00:00:00":
+        df.at[len(df)-1, 'end_at'] = "23:59:59"
     return df
 
 def daily_routine(user_id: str) -> go.Figure:
     df = get_data(user_id)
-
-    daily_routine_fig = px.timeline(df, x_start='start_at', x_end='end_at', color='routine', height=400, width=1200)
+    df['start_at'] = pd.to_datetime(df['start_at'], format='%H:%M:%S')
+    df['end_at'] = pd.to_datetime(df['end_at'], format='%H:%M:%S')
+    daily_routine_fig = px.timeline(df, x_start='start_at', x_end='end_at', y='user_id', color='routine', height=400, width=1200)
+    daily_routine_fig.update_xaxes(tickformat="%H:%M")
     daily_routine_fig.update_layout(template='simple_white', title='Daily Routine')
     return daily_routine_fig
 

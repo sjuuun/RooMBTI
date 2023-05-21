@@ -45,7 +45,7 @@ def weekly_routine(user_ids: List[str], routine_type: str = None) -> go.Figure:
     fig.update_yaxes(title="Sun", row=7, col=1)
 
     fig.update_xaxes(tickformat="%H:%M", range=["1900-01-01 00:00:00", "1900-01-02 00:00:00"])
-    fig.update_layout(title="Weekly Routine")
+    fig.update_layout(title="Weekly Routine", template="simple_white")
 
     fig.update_xaxes(type="date")
 

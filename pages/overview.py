@@ -88,7 +88,7 @@ layout = html.Div(children=[
             ),
         ]),
         dbc.Row(
-            dcc.Graph(id='daily_routine', figure=fig_daily_routine)
+            dcc.Graph(id='daily_routine', figure=daily_routine.daily_routine("P3029"))
         ),
         dbc.Row([
             html.Div(

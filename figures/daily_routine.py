@@ -6,6 +6,26 @@ import fake_data
 
 #daily_routine_columns = ['timestamp', 'Sleeping', 'Class', 'Meal', 'Study', 'Exercise', 'user']
 
+def get_data(user_id: str) -> pd.DataFrame:
+    data_dir = f'csv/routines/{user_id}-daily.csv'
+    df = pd.read_csv(data_dir)
+    return df
+
+def daily_routine(user_id: str) -> go.Figure:
+    df = get_data(user_id)
+
+    daily_routine_fig = px.timeline(df, x_start='start_at', x_end='end_at', color='routine', height=400, width=1200)
+    daily_routine_fig.update_layout(template='simple_white', title='Daily Routine')
+    return daily_routine_fig
+
+def daily_routine_compare(user_id: str, roommate_id: str) -> go.Figure:
+    user_df = get_data(user_id)
+    roommate_df = get_data(roommate_id)
+    df = pd.concat(user_df, roommate_df)
+    daily_routine_fig = px.timeline(user_df, x_start='start_at', x_end='end_at', y='user_id', color='routine', height=400, width=1200)
+    daily_routine_fig.update_layout(template='simple_white', title='Daily Routine')
+    return daily_routine_fig
+
 
 class daily_routine_fig:
     def __init__(self, userdata, roommatedata=pd.DataFrame()):
@@ -32,3 +52,4 @@ if __name__ == '__main__':
     daily_routine = daily_routine_fig(df_user[1], df_roommate[1])
     print(daily_routine.user_df)
     daily_routine.fig.show()
+

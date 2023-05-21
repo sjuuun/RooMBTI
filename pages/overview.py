@@ -14,7 +14,6 @@ from pages import Routine, SAMPLE_ME_ID
 dash.register_page(__name__, path="/")
 
 df_user, df_roommate = fake_data.user_and_roommate_data()
-fig_indoor = indoor.indoor_fig(df_user[2]).fig
 
 layout = html.Div(children=[
     html.H1(children="Overview"),
@@ -33,7 +32,7 @@ layout = html.Div(children=[
                 dcc.Graph(id='bfi', figure=bfi_single(SAMPLE_ME_ID))
             ),
             dbc.Col(
-                dcc.Graph(id='indoor', figure=fig_indoor)
+                dcc.Graph(id='indoor', figure=indoor.indoor(SAMPLE_ME_ID))
             ),
         ]),
         dbc.Row(

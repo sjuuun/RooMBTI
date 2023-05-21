@@ -2,10 +2,10 @@ import pandas as pd
 import plotly.graph_objects as go
 
 bfi_df = pd.read_csv("./csv/bfi.csv")
-bfi_columns = ['Openness', 'Conscientiousness', 'Neuroticism', 'Extraversion', 'Agreeableness']
+bfi_columns = ["Openness", "Conscientiousness", "Neuroticism", "Extraversion", "Agreeableness"]
 
 
-def bfi_single(user_id: str)-> go.Figure:
+def bfi_single(user_id: str) -> go.Figure:
     df = bfi_df[bfi_df["user_id"] == user_id]
     bfi_fig = go.Figure()
     bfi_fig.add_trace(
@@ -16,11 +16,11 @@ def bfi_single(user_id: str)-> go.Figure:
             name=user_id
         )
     )
-    bfi_fig.update_layout(template='simple_white', width=500, height=500, title="BFI")
+    bfi_fig.update_layout(template="simple_white", width=500, height=500, title="BFI")
     return bfi_fig
 
 
-def bfi_compare(me_id: str, roommate_id: str)-> go.Figure:
+def bfi_compare(me_id: str, roommate_id: str) -> go.Figure:
     me_df = bfi_df[bfi_df["user_id"] == me_id]
     roommate_df = bfi_df[bfi_df["user_id"] == roommate_id]
 
@@ -41,11 +41,11 @@ def bfi_compare(me_id: str, roommate_id: str)-> go.Figure:
             name=roommate_id
         )
     )
-    bfi_fig.update_layout(template='simple_white', width=500, height=500, title="BFI")
+    bfi_fig.update_layout(template="simple_white", width=500, height=500, title="BFI")
     return bfi_fig
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     user_id = "P3029"
     roommate_id = "P3030"
     fig = bfi_compare(user_id, roommate_id)

@@ -92,7 +92,7 @@ layout = html.Div(children=[
         dbc.Row([
             html.Div(
                 html.Div(
-                    dcc.RadioItems(
+                    dbc.RadioItems(
                         id="my_routine_type",
                         options=[
                             {"label": Routine.SLEEP.value, "value": Routine.SLEEP.name},

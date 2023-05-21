@@ -45,7 +45,7 @@ layout = html.Div(children=[
             ),
         ]),
         dbc.Row(
-            dcc.Graph(id='daily_routine', figure=daily_routine.daily_routine_compare("P3029", "P3030"))
+            dcc.Graph(id='daily_routine', figure=daily_routine.daily_routine_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID))
         ),
         dbc.Row([
             html.Div(

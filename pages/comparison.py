@@ -1,5 +1,5 @@
-
 import dash
+import dash_bootstrap_components as dbc
 import dash_daq as daq
 from dash import html, dcc, callback
 from dash.dependencies import Input, Output
@@ -17,83 +17,62 @@ df_user, df_roommate = fake_data.user_and_roommate_data()
 fig_indoor = indoor.indoor_fig(df_user[2], df_roommate[2]).fig_cmp
 fig_daily_routine = daily_routine.daily_routine_fig(df_user[1], df_roommate[1]).fig_cmp
 
-
 layout = html.Div(children=[
-    html.H1(children="This is our Comparison page"),
+    html.H1(children="Comparison"),
 
     html.Div(children="""
-        This is our Comparison page content.
+        Compare routines between me and roommate.
     """),
 
-    html.Div(children=[
-        html.Div(id='similarity', children=[
-            daq.Gauge(
-                label='Similarity',
-                showCurrentValue=True,
-                value=76,
-                max=100,
-                min=0,
-                color="#346beb"
+    dbc.Container([
+        dbc.Row([
+            dbc.Col(
+                html.Div(id='similarity', children=[
+                    daq.Gauge(
+                        label='Similarity',
+                        showCurrentValue=True,
+                        value=76,
+                        max=100,
+                        min=0,
+                        color="#346beb"
+                    )
+                ])
+            ),
+            dbc.Col(
+                dcc.Graph(id='bfi', figure=bfi_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID))
+            ),
+            dbc.Col(
+                dcc.Graph(id='indoor', figure=fig_indoor)
+            ),
+        ]),
+        dbc.Row(
+            dcc.Graph(id='daily_routine', figure=fig_daily_routine)
+        ),
+        dbc.Row([
+            html.Div(
+                html.Div(
+                    dcc.RadioItems(
+                        id="routine_type",
+                        options=[
+                            {"label": Routine.SLEEP.value, "value": Routine.SLEEP.name},
+                            {"label": Routine.CLASS.value, "value": Routine.CLASS.name},
+                            {"label": Routine.MEAL.value, "value": Routine.MEAL.name},
+                            {"label": Routine.STUDY.value, "value": Routine.STUDY.name},
+                            {"label": Routine.EXERCISE.value, "value": Routine.EXERCISE.name},
+                        ],
+                        value=Routine.SLEEP.name,
+                        inline=True,
+                    )
+                )
+            ),
+            dbc.Col(
+                dcc.Graph(id="weekly_routine", figure=weekly_routine_timeline(weekly_routine_fake_data()))
+            ),
+            dbc.Col(
+                dcc.Graph(id="geographical_scatter", figure=location_mapbox(location_mapbox_fake_data()))
             )
         ]),
-        # html.Div(children=[
-        #     dcc.Graph(id='similarity', figure=half_ring_plot(180))
-        # ]),
-        html.Div(children=[
-            html.Div(dcc.Graph(id='bfi', figure=bfi_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID)))
-            ],
-        ),
-        html.Div(children=[
-            dcc.Graph(id='indoor', figure=fig_indoor),
-            ],
-        ),
-
-        ],
-        style={
-            'display': 'flex'
-        }
-    ),
-
-    html.Div(children=[
-        dcc.Graph(id='daily_routine',figure=fig_daily_routine),
-        ],
-        style={
-            'padding': '0rem 0rem 0rem 16rem'
-        }
-    ),
-    
-    html.Div(children=[
-        html.Div(
-            html.Div(
-                dcc.RadioItems(
-                    id="routine_type",
-                    options=[
-                        {"label": Routine.SLEEP.value, "value": Routine.SLEEP.name},
-                        {"label": Routine.CLASS.value, "value": Routine.CLASS.name},
-                        {"label": Routine.MEAL.value, "value": Routine.MEAL.name},
-                        {"label": Routine.STUDY.value, "value": Routine.STUDY.name},
-                        {"label": Routine.EXERCISE.value, "value": Routine.EXERCISE.name},
-                    ],
-                    value=Routine.SLEEP.name,
-                    inline=True,
-                )
-            )
-        ),
-
-        html.Div(
-            dcc.Graph(id="weekly_routine", figure=weekly_routine_timeline(weekly_routine_fake_data())),
-            style=dict(float="left"),
-        ),
-
-        html.Div(
-            dcc.Graph(id="geographical_scatter", figure=location_mapbox(location_mapbox_fake_data())),
-            style=dict(float="left"),
-        )
-    ],
-    style={
-        'padding': '0rem 0rem 0rem 16rem'
-    }
-    )
+    ]),
 ])
 
 

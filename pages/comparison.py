@@ -14,7 +14,6 @@ from pages import Routine, SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID
 dash.register_page(__name__)
 
 df_user, df_roommate = fake_data.user_and_roommate_data()
-fig_indoor = indoor.indoor_fig(df_user[2], df_roommate[2]).fig_cmp
 
 layout = html.Div(children=[
     html.H1(children="Comparison"),
@@ -41,7 +40,7 @@ layout = html.Div(children=[
                 dcc.Graph(id='bfi', figure=bfi_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID))
             ),
             dbc.Col(
-                dcc.Graph(id='indoor', figure=fig_indoor)
+                dcc.Graph(id='indoor', figure=indoor.indoor_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID))
             ),
         ]),
         dbc.Row(

@@ -21,7 +21,7 @@ class bfi_fig:
         bfi_fig = go.Figure()
         bfi_fig.add_trace(
             go.Scatterpolar(
-                r=self.user_df.iloc[0].tolist()[1:6] + [self.user_df.iloc[0].tolist()[0]],
+                r=self.user_df.iloc[0].tolist()[1:6] + [self.user_df.iloc[0].tolist()[1]],
                 theta=bfi_columns + [bfi_columns[0]],
                 # name=f"{self.user_name}"
                 name="P3029"
@@ -34,7 +34,7 @@ class bfi_fig:
         bfi_fig = go.Figure()
         bfi_fig.add_trace(
             go.Scatterpolar(
-                r=self.user_df.iloc[0].tolist()[1:6] + [self.user_df.iloc[0].tolist()[0]],
+                r=self.user_df.iloc[0].tolist()[1:6] + [self.user_df.iloc[0].tolist()[1]],
                 theta=bfi_columns + [bfi_columns[0]],
                 # name=f"{self.user_name}"
                 name="P3029"
@@ -42,7 +42,7 @@ class bfi_fig:
         )
         bfi_fig.add_trace(
             go.Scatterpolar(
-                r=self.roommate_df.iloc[0].tolist()[1:6] + [self.roommate_df.iloc[0].tolist()[0]],
+                r=self.roommate_df.iloc[0].tolist()[1:6] + [self.roommate_df.iloc[0].tolist()[1]],
                 theta=bfi_columns + [bfi_columns[0]],
                 # name=f"{self.roommate_name}"
                 name="P3030"

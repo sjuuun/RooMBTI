@@ -16,7 +16,8 @@ location_df = get_location_data()
 
 def location_mapbox(user_ids: List[str], routine_type: str = None) -> go.Figure:
     df = location_df.loc[location_df["user_id"].isin(user_ids)]
-    if routine_type and routine_type != "SLEEP":
+    if routine_type:
+        routine_type = routine_type if routine_type != "SLEEP" else "INDOOR"
         df = df[df["routine"] == routine_type]
 
     px.set_mapbox_access_token(open(".mapbox_token").read())

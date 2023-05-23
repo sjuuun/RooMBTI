@@ -24,12 +24,16 @@ layout = html.Div(children=[
             dbc.Col([
                 dbc.Row(matched()),
                 dbc.Row(top_3())
-            ]),
+            ],
+                width=2,
+                align='center'),
             dbc.Col(
-                dcc.Graph(id='bfi', figure=bfi_single(SAMPLE_ME_ID))
+                dcc.Graph(id='bfi', figure=bfi_single(SAMPLE_ME_ID)),
+                width=5,
             ),
             dbc.Col(
-                dcc.Graph(id='indoor', figure=indoor.indoor(SAMPLE_ME_ID))
+                dcc.Graph(id='indoor', figure=indoor.indoor(SAMPLE_ME_ID)),
+                width=5,
             ),
         ]),
         dbc.Row(

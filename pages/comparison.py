@@ -31,13 +31,17 @@ layout = html.Div(children=[
                         min=0,
                         color="#346beb"
                     )
-                ])
+                ]),
+                width=2,
+                align='center'
             ),
             dbc.Col(
-                dcc.Graph(id='bfi', figure=bfi_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID))
+                dcc.Graph(id='bfi', figure=bfi_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID)),
+                width=5,
             ),
             dbc.Col(
-                dcc.Graph(id='indoor', figure=indoor.indoor_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID))
+                dcc.Graph(id='indoor', figure=indoor.indoor_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID)),
+                width=5
             ),
         ]),
         dbc.Row(

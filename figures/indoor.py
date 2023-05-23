@@ -47,7 +47,7 @@ def indoor(user_id: str) -> go.Figure:
     indoor_fig = go.Figure(data=[
                       go.Scatter(x=df.start_at, y=df.indoor_ratio, mode='lines', name='User')
                       ])
-    indoor_fig.update_layout(template='simple_white', title='Indoor', width=400, height=300)
+    indoor_fig.update_layout(template='simple_white', title='Indoor')
     indoor_fig.update_xaxes(tickformat="%H:%M")
     indoor_fig.update_yaxes(range=[0.0, 1.1])
     return indoor_fig
@@ -64,7 +64,7 @@ def indoor_compare(user_id: str, roommate_id: str) -> go.Figure:
                       go.Scatter(x=user_df.start_at, y=user_df.indoor_ratio, mode='lines', name='User'),
                       go.Scatter(x=roommate_df.start_at, y=roommate_df.indoor_ratio, mode='lines', name='Roommate')
                       ])
-    indoor_fig.update_layout(template='simple_white', title='Indoor', width=400, height=300)
+    indoor_fig.update_layout(template='simple_white', title='Indoor')
     indoor_fig.update_xaxes(tickformat="%H:%M")
     indoor_fig.update_yaxes(range=[0.0, 1.1])
     return indoor_fig

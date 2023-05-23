@@ -4,7 +4,12 @@ import plotly.express as px
 similarity_df = pd.read_csv("./csv/similarity.csv")
 
 def show_similarity():
-    fig = px.bar(similarity_df, x='similarity', y='user_id', text_auto=True, orientation='h', height=1000,
+    fig = px.bar(similarity_df,
+                x='similarity',
+                y='user_id',
+                text_auto=True,
+                orientation='h',
+                # height=1000,
                 labels={
                     'user_id': 'user'
                 },

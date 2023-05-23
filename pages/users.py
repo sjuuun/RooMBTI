@@ -9,7 +9,7 @@ from figures.similarity_barchart import show_similarity
 
 fig = show_similarity()
 
-dash.register_page(__name__)
+dash.register_page(__name__, title="RooMBTI")
 
 layout = html.Div(children=[
     html.H1(children="Users"),

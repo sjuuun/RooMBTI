@@ -10,7 +10,7 @@ from figures.weekly_routine import weekly_routine
 from figures.widget import matched, top_3
 from pages import Routine, SAMPLE_ME_ID
 
-dash.register_page(__name__, path="/")
+dash.register_page(__name__, path="/", title="RooMBTI")
 
 layout = html.Div(children=[
     html.H1(children="Overview"),

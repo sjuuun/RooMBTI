@@ -4,7 +4,6 @@ import dash_daq as daq
 from dash import html, dcc, callback
 from dash.dependencies import Input, Output
 
-import fake_data
 from figures import daily_routine, indoor
 from figures.bfi import bfi_compare
 from figures.location_mapbox import location_mapbox
@@ -12,8 +11,6 @@ from figures.weekly_routine import weekly_routine
 from pages import Routine, SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID
 
 dash.register_page(__name__)
-
-df_user, df_roommate = fake_data.user_and_roommate_data()
 
 layout = html.Div(children=[
     html.H1(children="Comparison"),
@@ -34,13 +31,17 @@ layout = html.Div(children=[
                         min=0,
                         color="#346beb"
                     )
-                ])
+                ]),
+                width=2,
+                align='center'
             ),
             dbc.Col(
-                dcc.Graph(id='bfi', figure=bfi_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID))
+                dcc.Graph(id='bfi', figure=bfi_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID)),
+                width=5,
             ),
             dbc.Col(
-                dcc.Graph(id='indoor', figure=indoor.indoor_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID))
+                dcc.Graph(id='indoor', figure=indoor.indoor_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID)),
+                width=5
             ),
         ]),
         dbc.Row(

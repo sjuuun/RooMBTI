@@ -16,7 +16,7 @@ def bfi_single(user_id: str) -> go.Figure:
             name=user_id
         )
     )
-    bfi_fig.update_layout(template="simple_white", width=500, height=500, title="BFI")
+    bfi_fig.update_layout(template="simple_white", title="BFI")
     return bfi_fig
 
 
@@ -41,7 +41,7 @@ def bfi_compare(me_id: str, roommate_id: str) -> go.Figure:
             name=roommate_id
         )
     )
-    bfi_fig.update_layout(template="simple_white", width=500, height=500, title="BFI")
+    bfi_fig.update_layout(template="simple_white", title="BFI")
     return bfi_fig
 
 

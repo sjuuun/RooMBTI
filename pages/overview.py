@@ -8,6 +8,7 @@ from figures import daily_routine, indoor
 from figures.bfi import bfi_single
 from figures.location_mapbox import location_mapbox
 from figures.weekly_routine import weekly_routine
+from figures.widget import matched, top_3
 from pages import Routine, SAMPLE_ME_ID
 
 dash.register_page(__name__, path="/")
@@ -24,59 +25,8 @@ layout = html.Div(children=[
     dbc.Container([
         dbc.Row([
             dbc.Col([
-                dbc.Row(
-                    html.Div(
-                        id='matched',
-                        children=[html.H3("Matched"), html.H4("9/40")],
-                        style={
-                            'float': 'left',
-                            'margin': '20px',
-                            'width': '200px',
-                            'height': '90px',
-                            'text-align': 'center',
-                            'border-style': 'solid',
-                            'border-color': '#eeeee4'
-                        }
-                    )
-                ),
-                dbc.Row(
-                    html.Div(id='top3', children=[
-                        html.H3("Top 3 Users"),
-                        html.Div(id='user figures', children=[
-                            html.Img(
-                                src="https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper.png",
-                                style={
-                                    'width': '25%',
-                                    'heigh': '25%',
-                                }
-                            ),
-                            html.Img(
-                                src="https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper.png",
-                                style={
-                                    'width': '25%',
-                                    'heigh': '25%',
-                                }
-                            ),
-                            html.Img(
-                                src="https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper.png",
-                                style={
-                                    'width': '25%',
-                                    'heigh': '25%',
-                                }
-                            )
-                        ],
-                        style={'float': 'left'}),
-                    ],
-                    style={
-                        'float': 'left',
-                        'margin': '20px',
-                        'width': '200px',
-                        'height': '90px',
-                        'text-align': 'center',
-                        'border-style': 'solid',
-                        'border-color': '#eeeee4'
-                    })
-                )
+                dbc.Row(matched()),
+                dbc.Row(top_3())
             ]),
             dbc.Col(
                 dcc.Graph(id='bfi', figure=bfi_single(SAMPLE_ME_ID))

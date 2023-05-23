@@ -10,5 +10,5 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.14
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: roombti
-          heroku_email: osjuny@kaist.ac.kr
+          heroku_app_name: roombtis
+          heroku_email: osjuny11@gmail.com

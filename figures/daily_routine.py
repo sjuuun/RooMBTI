@@ -1,8 +1,6 @@
 import pandas as pd
-import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-import fake_data
 
 '''(userid)-daily.csv columns: ["user_id", "start_at", "end_at", "routine"]
 
@@ -12,6 +10,7 @@ end_at: str
 routine: str
 '''
 daily_routines_data = pd.read_csv(f'csv/daily_routines.csv')
+
 
 def get_data(user_id: str) -> pd.DataFrame:
     global daily_routines_data
@@ -33,12 +32,14 @@ def get_data(user_id: str) -> pd.DataFrame:
     merged_df = pd.DataFrame(merged_df, columns=["index", "user_id", "start_at", "end_at", "routine"])
     return merged_df
 
+
 def daily_routine(user_id: str) -> go.Figure:
     df = get_data(user_id)
     daily_routine_fig = px.timeline(df, x_start='start_at', x_end='end_at', y='user_id', color='routine', height=400, width=1200)
     daily_routine_fig.update_xaxes(tickformat="%H:%M")
     daily_routine_fig.update_layout(template='simple_white', title='Daily Routine')
     return daily_routine_fig
+
 
 def daily_routine_compare(user_id: str, roommate_id: str) -> go.Figure:
     user_df = get_data(user_id)

@@ -3,7 +3,6 @@ import dash_bootstrap_components as dbc
 from dash import callback, html, dcc
 from dash.dependencies import Input, Output
 
-import fake_data
 from figures import daily_routine, indoor
 from figures.bfi import bfi_single
 from figures.location_mapbox import location_mapbox
@@ -12,8 +11,6 @@ from figures.widget import matched, top_3
 from pages import Routine, SAMPLE_ME_ID
 
 dash.register_page(__name__, path="/")
-
-df_user, df_roommate = fake_data.user_and_roommate_data()
 
 layout = html.Div(children=[
     html.H1(children="Overview"),

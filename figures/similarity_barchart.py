@@ -9,6 +9,7 @@ def show_similarity():
                     'user_id': 'user'
                 },
                 title="Routine similarity among users")
+    fig.update_xaxes(range=[0, 1])
     fig.update_layout(yaxis={'categoryorder': 'total ascending'})
     # fig.update_layout(
     #     updatemenus=[

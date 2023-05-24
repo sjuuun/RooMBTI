@@ -15,7 +15,7 @@ Data Visualization to choose the best random roommate who has the most similar r
 ## Project Information
 
 - [Process Book](https://docs.google.com/presentation/d/1kuU-V88qBJ4Ogxo-qTaQh4tEqD8Xr45Mj6PrIO1u69o/edit#slide=id.g1f9df24d571_0_171)
-- [Prototype URL](https://roombti.herokuapp.com/)
+- [Prototype URL](https://roombtis.herokuapp.com/)
 
 ## Installation
 

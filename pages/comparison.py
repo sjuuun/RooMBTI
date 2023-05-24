@@ -10,7 +10,7 @@ from figures.location_mapbox import location_mapbox
 from figures.weekly_routine import weekly_routine
 from pages import Routine, SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID
 
-dash.register_page(__name__)
+dash.register_page(__name__, title="RooMBTI")
 
 layout = html.Div(children=[
     html.H1(children="Comparison"),

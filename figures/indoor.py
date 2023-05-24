@@ -49,7 +49,7 @@ def indoor(user_id: str) -> go.Figure:
                       ])
     indoor_fig.update_layout(template='simple_white', title='Indoor')
     indoor_fig.update_xaxes(tickformat="%H:%M")
-    indoor_fig.update_yaxes(range=[0.0, 1.1])
+    indoor_fig.update_yaxes(range=[0.0, 1.1], title="Indoor Ratio")
     return indoor_fig
 
 
@@ -66,7 +66,7 @@ def indoor_compare(user_id: str, roommate_id: str) -> go.Figure:
                       ])
     indoor_fig.update_layout(template='simple_white', title='Indoor')
     indoor_fig.update_xaxes(tickformat="%H:%M")
-    indoor_fig.update_yaxes(range=[0.0, 1.1])
+    indoor_fig.update_yaxes(range=[0.0, 1.1], title="Indoor Ratio")
     return indoor_fig
 
 

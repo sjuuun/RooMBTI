@@ -13,9 +13,17 @@ navbar = dbc.Navbar(
                     [
                         dbc.Col(html.I(className="fa-solid fa-people-roof", style=dict(color="#FFFFFF"))),
                         dbc.Col(dbc.NavbarBrand("RooMBTI", href="/")),
-                        dbc.Col(dbc.NavLink("Overview", href="/", active="exact", style=dict(color="#FFFFFF"))),
-                        dbc.Col(dbc.NavLink("Users", href="/users", active="exact", style=dict(color="#FFFFFF"))),
-                        dbc.Col(dbc.NavLink("Comparison", href="/comparison", active="exact", style=dict(color="#FFFFFF"))),
+                        dbc.Col(
+                            dbc.Nav(
+                                [
+                                    dbc.NavLink("Overview", href="/", active="exact", style=dict(color="#FFFFFF")),
+                                    dbc.NavLink("Users", href="/users", active="exact", style=dict(color="#FFFFFF")),
+                                    dbc.NavLink("Comparison", href="/comparison", active="exact",
+                                                        style=dict(color="#FFFFFF")),
+                                ],
+                                pills=True
+                            )
+                        )
                     ],
                     align="center",
                 ),

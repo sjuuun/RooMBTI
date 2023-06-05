@@ -20,11 +20,21 @@ weekly_df = get_weekly_routine_data()
 
 def weekly_routine(user_ids: List[str], routine_type: str = None) -> go.Figure:
     df = weekly_df.loc[weekly_df["user_id"].isin(user_ids)]
-    df = df.replace(user_ids[0], "You")
+
+
+
+    routine_list = ["SLEEP", "CLASS", "MEAL", "EXERCISE", "STUDY", "INDOOR"]
     if len(user_ids) == 2:
+        for i in range(7):
+            for j in routine_list:
+                for k in user_ids:
+                    df.loc[len(df)] = [0, k, '2000-01-01 00:00:00', '2000-01-01 00:00:00', i, j]
         df = df.replace(user_ids[1], "Roommate")
+    df = df.replace(user_ids[0], "You")
+    print(df)
     if routine_type:
         df = df[df["routine"] == routine_type]
+    
     df = df.sort_values(by='user_id', ascending=False)
     fig = make_subplots(rows=7, cols=1, shared_xaxes=True, vertical_spacing=0.02)
     timeline_figs = []

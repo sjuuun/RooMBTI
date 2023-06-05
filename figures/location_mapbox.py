@@ -5,6 +5,8 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
+COLOR_MAP = {"You": "#3B76AF", "Roommate": "#EF8636"}
+
 
 def get_location_data():
     location_files = glob.glob("csv/routines_raw/*-location.csv")
@@ -33,7 +35,8 @@ def location_mapbox(user_ids: List[str], routine_type: str = None) -> go.Figure:
         hover_data=["latitude", "longitude"],
         zoom=3,
         width=500,
-        height=600
+        height=600,
+        color_discrete_map=COLOR_MAP,
     )
     fig.update_layout(title="Location", mapbox_style="streets")
     fig.update_layout(mapbox_bounds={"west": 127.35, "east": 127.37, "south": 36.36, "north": 36.38})

@@ -47,7 +47,7 @@ def weekly_routine(user_ids: List[str], routine_type: str = None) -> go.Figure:
         f = timeline_figs[i]
         show_legend = True if i == 0 else False
         for j in range(len(f.data)):
-            fig.add_trace(go.Bar(f.data[j], showlegend=show_legend), row=(i + 1), col=1)
+            fig.add_trace(go.Bar(f.data[j], showlegend=show_legend, xhoverformat="%H:%M"), row=(i + 1), col=1)
 
     fig.update_yaxes(title="Mon", row=1, col=1, categoryorder='category ascending')
     fig.update_yaxes(title="Tue", row=2, col=1, categoryorder='category ascending')

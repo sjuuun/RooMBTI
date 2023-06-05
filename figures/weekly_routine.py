@@ -29,15 +29,25 @@ def weekly_routine(user_ids: List[str], routine_type: str = None) -> go.Figure:
     fig = make_subplots(rows=7, cols=1, shared_xaxes=True, vertical_spacing=0.02)
     timeline_figs = []
     for i in range(7):
+        w_df = df[df["weekday"] == i]
+        if w_df.empty and len(user_ids) == 1:
+            w_df = df.head(1)
+            w_df['end_at'] = w_df['start_at']
+        if w_df.empty and len(user_ids) == 2:
+            filtered_user_ids = list(w_df['user_id'].unique())
+            for u in ['You', 'Roommate']:
+                if u not in filtered_user_ids:
+                    w_df = pd.concat([w_df, pd.DataFrame({'user_id': [u], 'start_at': ['1900-01-01 00:00:00'], 'end_at': ['1900-01-01 00:00:00'], 'weekday': [i], 'routine': [routine_type]})], ignore_index=True)
+
         timeline_figs.append(
-            px.timeline(df[df["weekday"] == i], x_start="start_at", x_end="end_at", y="user_id", color="user_id", category_orders={"user_id": ["You", "Roommate"]})
+            px.timeline(w_df, x_start="start_at", x_end="end_at", y="user_id", color="user_id", category_orders={"user_id": ["You", "Roommate"]})
         )
 
     for i in range(7):
         f = timeline_figs[i]
         show_legend = True if i == 0 else False
         for j in range(len(f.data)):
-            fig.add_trace(go.Bar(f.data[j], showlegend=show_legend), row=(i + 1), col=1)
+            fig.add_trace(go.Bar(f.data[j], showlegend=show_legend, xhoverformat="%H:%M"), row=(i + 1), col=1)
 
     fig.update_yaxes(title="Mon", row=1, col=1, categoryorder='category ascending')
     fig.update_yaxes(title="Tue", row=2, col=1, categoryorder='category ascending')

@@ -5,7 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-COLOR_MAP = {"You": "#3B76AF", "Roommate": "#EF8636"}
+COLOR_MAP = {"You": "#1F77B4", "Roommate": "#FF7F0E"}
 
 
 def get_weekly_routine_data():

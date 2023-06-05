@@ -20,6 +20,9 @@ weekly_df = get_weekly_routine_data()
 
 def weekly_routine(user_ids: List[str], routine_type: str = None) -> go.Figure:
     df = weekly_df.loc[weekly_df["user_id"].isin(user_ids)]
+    df = df.replace(user_ids[0], "You")
+    if len(user_ids) == 2:
+        df = df.replace(user_ids[1], "Roommate")
     if routine_type:
         df = df[df["routine"] == routine_type]
 

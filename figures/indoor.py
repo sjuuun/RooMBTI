@@ -45,9 +45,9 @@ def get_data(user_id: str) -> pd.DataFrame:
 def indoor(user_id: str) -> go.Figure:
     df = get_data(user_id)
     indoor_fig = go.Figure(data=[
-                      go.Scatter(x=df.start_at, y=df.indoor_ratio, mode='lines', name='User')
+                      go.Scatter(x=df.start_at, y=df.indoor_ratio, mode='lines', name='You')
                       ])
-    indoor_fig.update_layout(template='simple_white', title='Indoor')
+    indoor_fig.update_layout(template='simple_white', title='Indoor', showlegend=True)
     indoor_fig.update_xaxes(tickformat="%H:%M")
     indoor_fig.update_yaxes(range=[0.0, 1.1], title="Indoor Ratio")
     return indoor_fig
@@ -56,12 +56,9 @@ def indoor(user_id: str) -> go.Figure:
 def indoor_compare(user_id: str, roommate_id: str) -> go.Figure:
     user_df = get_data(user_id)
     roommate_df = get_data(roommate_id)
-    """indoor_fig = go.Figure(data=[
-                      go.Scatter(x=user_df.start_at, y=user_df.indoor_ratio, mode='lines', name='User', line_shape='spline'),
-                      go.Scatter(x=roommate_df.start_at, y=roommate_df.indoor_ratio, mode='lines', name='User', line_shape='spline')
-                      ])"""
+
     indoor_fig = go.Figure(data=[
-                      go.Scatter(x=user_df.start_at, y=user_df.indoor_ratio, mode='lines', name='User'),
+                      go.Scatter(x=user_df.start_at, y=user_df.indoor_ratio, mode='lines', name='You'),
                       go.Scatter(x=roommate_df.start_at, y=roommate_df.indoor_ratio, mode='lines', name='Roommate')
                       ])
     indoor_fig.update_layout(template='simple_white', title='Indoor')

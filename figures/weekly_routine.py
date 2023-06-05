@@ -5,6 +5,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
+COLOR_MAP = {"You": "#3B76AF", "Roommate": "#EF8636"}
+
 
 def get_weekly_routine_data():
     df = pd.read_csv("./csv/weekly_routines.csv")
@@ -21,8 +23,6 @@ weekly_df = get_weekly_routine_data()
 def weekly_routine(user_ids: List[str], routine_type: str = None) -> go.Figure:
     df = weekly_df.loc[weekly_df["user_id"].isin(user_ids)].copy()
 
-
-
     routine_list = ["SLEEP", "CLASS", "MEAL", "EXERCISE", "STUDY", "INDOOR"]
     for i in range(7):
         for j in routine_list:
@@ -34,14 +34,14 @@ def weekly_routine(user_ids: List[str], routine_type: str = None) -> go.Figure:
 
     if routine_type:
         df = df[df["routine"] == routine_type]
-    
+
     df = df.sort_values(by='user_id', ascending=False)
     fig = make_subplots(rows=7, cols=1, shared_xaxes=True, vertical_spacing=0.02)
     timeline_figs = []
     for i in range(7):
         w_df = df[df["weekday"] == i]
         timeline_figs.append(
-            px.timeline(w_df, x_start="start_at", x_end="end_at", y="user_id", color="user_id", category_orders={"user_id": ["You", "Roommate"]})
+            px.timeline(w_df, x_start="start_at", x_end="end_at", y="user_id", color="user_id", category_orders={"user_id": ["You", "Roommate"]}, color_discrete_map=COLOR_MAP)
         )
 
     for i in range(7):

@@ -48,9 +48,9 @@ def daily_routine_compare(user_id: str, roommate_id: str) -> go.Figure:
     df = pd.concat([user_df, roommate_df])[["user_id", "start_at", "end_at", "routine"]]
     df = df.replace(user_id, "You")
     df = df.replace(roommate_id, "Roommate")
-    daily_routine_fig = px.timeline(df, x_start='start_at', x_end='end_at', y='user_id', color='routine', height=400, width=1200)
+    daily_routine_fig = px.timeline(df, x_start='start_at', x_end='end_at', y='user_id', color='routine', height=400, width=1200,  category_orders={"user_id": ["You", "Roommate"]})
     daily_routine_fig.update_xaxes(tickformat="%H:%M")
-    daily_routine_fig.update_layout(template='simple_white', title='Daily Routine', yaxis_title=None)
+    daily_routine_fig.update_layout(template='simple_white', title='Daily Routine', yaxis_title=None, yaxis_categoryorder='category ascending')
     return daily_routine_fig
 
 

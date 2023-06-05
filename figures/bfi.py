@@ -17,7 +17,7 @@ def bfi_single(user_id: str) -> go.Figure:
         )
     )
     bfi_fig.update_layout(template="simple_white", title="BFI", showlegend=True)
-    bfi_fig.update_polars(radialaxis_angle = 90, radialaxis_range=[0, 15], radialaxis_tickangle=90, angularaxis_rotation=90)
+    bfi_fig.update_polars(radialaxis_angle = 90, radialaxis_range=[0, 15], radialaxis_tickangle=90, angularaxis_rotation=90, angularaxis_direction = "clockwise")
     return bfi_fig
 
 

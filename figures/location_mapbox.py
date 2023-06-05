@@ -16,6 +16,9 @@ location_df = get_location_data()
 
 def location_mapbox(user_ids: List[str], routine_type: str = None) -> go.Figure:
     df = location_df.loc[location_df["user_id"].isin(user_ids)]
+    df = df.replace(user_ids[0], "You")
+    if len(user_ids) == 2:
+        df = df.replace(user_ids[1], "Roommate")
     if routine_type:
         routine_type = routine_type if routine_type != "SLEEP" else "INDOOR"
         df = df[df["routine"] == routine_type]

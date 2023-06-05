@@ -13,11 +13,11 @@ def bfi_single(user_id: str) -> go.Figure:
             r=df.iloc[0].tolist()[1:6] + [df.iloc[0].tolist()[1]],
             theta=bfi_columns + [bfi_columns[0]],
             # name=f"{self.user_name}"
-            name=user_id
+            name="You"
         )
     )
-    bfi_fig.update_layout(template="simple_white", title="BFI")
-    bfi_fig.update_polars(radialaxis_angle = 90, radialaxis_range=[0, 15], radialaxis_tickangle=90, angularaxis_rotation=90)
+    bfi_fig.update_layout(template="simple_white", title="BFI", showlegend=True)
+    bfi_fig.update_polars(radialaxis_angle = 90, radialaxis_range=[0, 15], radialaxis_tickangle=90, angularaxis_rotation=90, angularaxis_direction = "clockwise")
     return bfi_fig
 
 
@@ -31,7 +31,7 @@ def bfi_compare(me_id: str, roommate_id: str) -> go.Figure:
             r=me_df.iloc[0].tolist()[1:6] + [me_df.iloc[0].tolist()[1]],
             theta=bfi_columns + [bfi_columns[0]],
             # name=f"{self.user_name}"
-            name=me_id
+            name="You"
         )
     )
     bfi_fig.add_trace(
@@ -39,11 +39,11 @@ def bfi_compare(me_id: str, roommate_id: str) -> go.Figure:
             r=roommate_df.iloc[0].tolist()[1:6] + [roommate_df.iloc[0].tolist()[1]],
             theta=bfi_columns + [bfi_columns[0]],
             # name=f"{self.roommate_name}"
-            name=roommate_id
+            name="Roommate"
         )
     )
     bfi_fig.update_layout(template="simple_white", title="BFI")
-    bfi_fig.update_polars(radialaxis_angle = 90, radialaxis_range=[0, 15], radialaxis_tickangle=90, angularaxis_rotation=90)
+    bfi_fig.update_polars(radialaxis_angle = 90, radialaxis_range=[0, 15], radialaxis_tickangle=90, angularaxis_rotation=90, angularaxis_direction = "clockwise")
     return bfi_fig
 
 

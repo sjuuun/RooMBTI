@@ -16,6 +16,14 @@ def show_similarity():
                 title="Routine similarity among users")
     fig.update_xaxes(range=[0, 1])
     fig.update_layout(yaxis={'categoryorder': 'total ascending'})
+    for r in similarity_df.iterrows():
+        fig.add_annotation(
+            {
+                'x': r[1]['similarity'],
+                'y': r[1]['user_id'],
+                'text': f"<a href='./comparison'>{r[1]['user_id']}</a>"
+            }
+        )
     # fig.update_layout(
     #     updatemenus=[
     #         dict(

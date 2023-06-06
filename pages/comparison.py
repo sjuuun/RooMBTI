@@ -23,20 +23,8 @@ layout = html.Div(children=[
     dbc.Container([
         dbc.Row([
             dbc.Col(
-                # html.Div(id='similarity', children=[
-                #     daq.Gauge(
-                #         label='Similarity',
-                #         showCurrentValue=True,
-                #         value=76,
-                #         max=100,
-                #         min=0,
-                #         color="#346beb"
-                #     )
-                # ]),
-                # width=2,
-                # align='center'
                 dcc.Graph(id='similarity', figure=half_ring_plot(35)),
-                width=5,
+                width=4,
             ),
             dbc.Col(
                 dcc.Graph(id='bfi', figure=bfi_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID)),

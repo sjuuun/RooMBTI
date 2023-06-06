@@ -26,41 +26,4 @@ def show_similarity():
                 'xshift': 30
             }
         )
-    # fig.update_layout(
-    #     updatemenus=[
-    #         dict(
-    #             buttons=list([
-    #                 dict(
-    #                     args=["type", "bar"],
-    #                     label="Ascending order",
-    #                     method="restyle"
-    #                 ),
-    #                 dict(
-    #                     args=["type", "bar"],
-    #                     label="Descending order",
-    #                     method="restyle"
-    #                 )
-    #             ]),
-    #             direction="down",
-    #             pad={"r": 10, "t":10},
-    #             showactive=True,
-    #             x=0.1,
-    #             xanchor="left",
-    #             y=1.1,
-    #             yanchor="top"
-    #         ),
-    #     ]
-    # )
-    # fig.update_layout(
-    #     annotations=[
-    #         dict(
-    #             text="Order",
-    #             showarrow=False,
-    #             x=0,
-    #             y=1.085,
-    #             yref="paper",
-    #             align="left"
-    #         )
-    #     ]
-    # )
     return fig

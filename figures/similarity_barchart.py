@@ -10,7 +10,7 @@ def show_similarity():
                 y='user_id',
                 text_auto=True,
                 orientation='h',
-                # height=1000,
+                height=800,
                 labels={
                     'user_id': 'user'
                 },

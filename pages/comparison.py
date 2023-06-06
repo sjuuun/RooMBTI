@@ -8,6 +8,7 @@ from figures import daily_routine, indoor
 from figures.bfi import bfi_compare
 from figures.location_mapbox import location_mapbox
 from figures.weekly_routine import weekly_routine
+from figures.similarity_barpolar import half_ring_plot
 from pages import Routine, SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID
 
 dash.register_page(__name__, title="RooMBTI")
@@ -22,18 +23,20 @@ layout = html.Div(children=[
     dbc.Container([
         dbc.Row([
             dbc.Col(
-                html.Div(id='similarity', children=[
-                    daq.Gauge(
-                        label='Similarity',
-                        showCurrentValue=True,
-                        value=76,
-                        max=100,
-                        min=0,
-                        color="#346beb"
-                    )
-                ]),
-                width=2,
-                align='center'
+                # html.Div(id='similarity', children=[
+                #     daq.Gauge(
+                #         label='Similarity',
+                #         showCurrentValue=True,
+                #         value=76,
+                #         max=100,
+                #         min=0,
+                #         color="#346beb"
+                #     )
+                # ]),
+                # width=2,
+                # align='center'
+                dcc.Graph(id='similarity', figure=half_ring_plot(35)),
+                width=5,
             ),
             dbc.Col(
                 dcc.Graph(id='bfi', figure=bfi_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID)),

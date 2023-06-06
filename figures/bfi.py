@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.graph_objects as go
 
 bfi_df = pd.read_csv("./csv/bfi.csv")
-bfi_columns = ["Openness", "Conscientiousness", "Neuroticism", "Extraversion", "Agreeableness"]
+bfi_columns = ["Open", "Conscientious", "Neurotic", "Extrovert", "Agreeable"]
 
 
 def bfi_single(user_id: str) -> go.Figure:

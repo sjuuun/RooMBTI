@@ -27,7 +27,10 @@ def weekly_routine(user_ids: List[str], routine_type: str = None) -> go.Figure:
     for i in range(7):
         for j in routine_list:
             for k in user_ids:
-                df.loc[len(df)] = [0, k, '2000-01-01 00:00:00', '2000-01-01 00:00:00', i, j]
+                df = pd.concat([
+                    df,
+                    pd.DataFrame({'user_id': [k], 'start_at': ['2000-01-01 00:00:00'], 'end_at': ['2000-01-01 00:00:00'],
+                                  'weekday': [i], 'routine': [j]})], ignore_index=True)
     if len(user_ids) == 2:
         df = df.replace(user_ids[1], "Roommate")
     df = df.replace(user_ids[0], "You")

@@ -3,6 +3,7 @@ import plotly.express as px
 
 similarity_df = pd.read_csv("./csv/similarity.csv")
 
+
 def show_similarity():
     fig = px.bar(similarity_df,
                 x='similarity',
@@ -16,12 +17,12 @@ def show_similarity():
                 title="Routine similarity among users")
     fig.update_xaxes(range=[0, 1])
     fig.update_layout(yaxis={'categoryorder': 'total ascending'})
-    for r in similarity_df.iterrows():
+    for _, r in similarity_df.iterrows():
         fig.add_annotation(
             {
-                'x': r[1]['similarity'],
-                'y': r[1]['user_id'],
-                'text': f"<a href='./comparison'>{r[1]['user_id']}</a>",
+                'x': r['similarity'],
+                'y': r['user_id'],
+                'text': f"<a href='/comparison?roommate_id={r['user_id']}'>{r['user_id']}</a>",
                 'showarrow': False,
                 'xshift': 30
             }

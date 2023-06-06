@@ -21,7 +21,9 @@ def show_similarity():
             {
                 'x': r[1]['similarity'],
                 'y': r[1]['user_id'],
-                'text': f"<a href='./comparison'>{r[1]['user_id']}</a>"
+                'text': f"<a href='./comparison'>{r[1]['user_id']}</a>",
+                'showarrow': False,
+                'xshift': 30
             }
         )
     # fig.update_layout(

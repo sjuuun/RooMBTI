@@ -13,11 +13,11 @@ from pages import Routine, SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID
 dash.register_page(__name__, title="RooMBTI")
 
 layout = html.Div(children=[
-    dcc.Location('path', refresh=False),
+    dcc.Location('path', refresh=True),
     html.H1(children="Comparison"),
 
-    html.Div(children="""
-        Compare routines between me and roommate.
+    html.Div(id='compare_description', children=f"""
+        Compare routines between me and roommate {SAMPLE_ROOMMATE_ID}.
     """),
 
     dbc.Container([
@@ -71,12 +71,23 @@ def parse_roommate_id(query_parameter: str) -> str:
 
 
 @callback(
+    Output('compare_description', 'children'),
+    Input('path', 'search'),
+)
+def update_bfi(path):
+    roommate_id = parse_roommate_id(path)
+    return f"""
+        Compare routines between me and roommate {roommate_id or SAMPLE_ROOMMATE_ID}.
+    """
+
+
+@callback(
     Output('similarity', 'figure'),
     Input('path', 'search'),
 )
 def update_similarity(path):
     roommate_id = parse_roommate_id(path)
-    return half_ring_plot(roommate_id)
+    return half_ring_plot(roommate_id or SAMPLE_ROOMMATE_ID)
 
 
 @callback(
@@ -85,7 +96,7 @@ def update_similarity(path):
 )
 def update_bfi(path):
     roommate_id = parse_roommate_id(path)
-    return bfi_compare(SAMPLE_ME_ID, roommate_id)
+    return bfi_compare(SAMPLE_ME_ID, roommate_id or SAMPLE_ROOMMATE_ID)
 
 
 @callback(
@@ -94,7 +105,7 @@ def update_bfi(path):
 )
 def update_indoor(path):
     roommate_id = parse_roommate_id(path)
-    return indoor.indoor_compare(SAMPLE_ME_ID, roommate_id)
+    return indoor.indoor_compare(SAMPLE_ME_ID, roommate_id or SAMPLE_ROOMMATE_ID)
 
 
 @callback(
@@ -103,7 +114,7 @@ def update_indoor(path):
 )
 def update_daily_routine(path):
     roommate_id = parse_roommate_id(path)
-    return daily_routine.daily_routine_compare(SAMPLE_ME_ID, roommate_id)
+    return daily_routine.daily_routine_compare(SAMPLE_ME_ID, roommate_id or SAMPLE_ROOMMATE_ID)
 
 
 @callback(
@@ -112,7 +123,7 @@ def update_daily_routine(path):
 )
 def update_weekly_routine(path, routine_type):
     roommate_id = parse_roommate_id(path)
-    return weekly_routine([SAMPLE_ME_ID, roommate_id], routine_type)
+    return weekly_routine([SAMPLE_ME_ID, roommate_id or SAMPLE_ROOMMATE_ID], routine_type)
 
 
 @callback(
@@ -121,4 +132,4 @@ def update_weekly_routine(path, routine_type):
 )
 def update_geographical_scatter(path, routine_type):
     roommate_id = parse_roommate_id(path)
-    return location_mapbox([SAMPLE_ME_ID, roommate_id], routine_type)
+    return location_mapbox([SAMPLE_ME_ID, roommate_id or SAMPLE_ROOMMATE_ID], routine_type)

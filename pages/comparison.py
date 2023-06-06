@@ -1,6 +1,5 @@
 import dash
 import dash_bootstrap_components as dbc
-import dash_daq as daq
 from dash import html, dcc, callback
 from dash.dependencies import Input, Output
 
@@ -14,6 +13,7 @@ from pages import Routine, SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID
 dash.register_page(__name__, title="RooMBTI")
 
 layout = html.Div(children=[
+    dcc.Location('path', refresh=False),
     html.H1(children="Comparison"),
 
     html.Div(children="""
@@ -23,12 +23,12 @@ layout = html.Div(children=[
     dbc.Container([
         dbc.Row([
             dbc.Col(
-                dcc.Graph(id='similarity', figure=half_ring_plot(35)),
-                width=4,
+                dcc.Graph(id='similarity', figure=half_ring_plot(SAMPLE_ROOMMATE_ID)),
+                width=3,
             ),
             dbc.Col(
                 dcc.Graph(id='bfi', figure=bfi_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID)),
-                width=5,
+                width=4,
             ),
             dbc.Col(
                 dcc.Graph(id='indoor', figure=indoor.indoor_compare(SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID)),
@@ -66,17 +66,59 @@ layout = html.Div(children=[
 ])
 
 
+def parse_roommate_id(query_parameter: str) -> str:
+    return query_parameter.split('=')[-1]
+
+
+@callback(
+    Output('similarity', 'figure'),
+    Input('path', 'search'),
+)
+def update_similarity(path):
+    roommate_id = parse_roommate_id(path)
+    return half_ring_plot(roommate_id)
+
+
+@callback(
+    Output('bfi', 'figure'),
+    Input('path', 'search'),
+)
+def update_bfi(path):
+    roommate_id = parse_roommate_id(path)
+    return bfi_compare(SAMPLE_ME_ID, roommate_id)
+
+
+@callback(
+    Output('indoor', 'figure'),
+    Input('path', 'search'),
+)
+def update_indoor(path):
+    roommate_id = parse_roommate_id(path)
+    return indoor.indoor_compare(SAMPLE_ME_ID, roommate_id)
+
+
+@callback(
+    Output('daily_routine', 'figure'),
+    Input('path', 'search'),
+)
+def update_daily_routine(path):
+    roommate_id = parse_roommate_id(path)
+    return daily_routine.daily_routine_compare(SAMPLE_ME_ID, roommate_id)
+
+
 @callback(
     Output('weekly_routine', 'figure'),
-    Input('routine_type', 'value'),
+    [Input('path', 'search'), Input('routine_type', 'value')],
 )
-def update_weekly_routine(routine_type):
-    return weekly_routine([SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID], routine_type)
+def update_weekly_routine(path, routine_type):
+    roommate_id = parse_roommate_id(path)
+    return weekly_routine([SAMPLE_ME_ID, roommate_id], routine_type)
 
 
 @callback(
     Output('geographical_scatter', 'figure'),
-    Input('routine_type', 'value'),
+    [Input('path', 'search'), Input('routine_type', 'value')],
 )
-def update_geographical_scatter(routine_type):
-    return location_mapbox([SAMPLE_ME_ID, SAMPLE_ROOMMATE_ID], routine_type)
+def update_geographical_scatter(path, routine_type):
+    roommate_id = parse_roommate_id(path)
+    return location_mapbox([SAMPLE_ME_ID, roommate_id], routine_type)

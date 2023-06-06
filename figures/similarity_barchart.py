@@ -22,7 +22,7 @@ def show_similarity():
             {
                 'x': r['similarity'],
                 'y': r['user_id'],
-                'text': f"<a href='/comparison?roommate_id={r['user_id']} target='_self'>{r['user_id']}</a>",
+                'text': f"<a href='/comparison?roommate_id={r['user_id']}' target='_self'>{r['user_id']}</a>",
                 'showarrow': False,
                 'xshift': 30
             }
